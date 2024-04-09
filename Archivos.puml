@@ -1,0 +1,88 @@
+@startuml
+
+class Archivo {
+    - nombre: String
+    - extension: String
+    - ruta: String
+
+    + getNombre(): String
+    + getExtension(): String
+    + getRuta(): String
+    + toString(): String
+    + leerArchivo()
+    + escribirArchivo()
+}
+
+class ArchivoTexto {
+
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoBinario {
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoTextoLibroFisico {
+    - registros: List<String>
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoTextoLibroElectronico {
+    - registros: List<String>
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoTextoLibroAudio {
+    - registros: List<String>
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoTextoLibroInfantil {
+    - registros: List<String>
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoBinarioLibroFisico {
+    - datos: byte[]
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoBinarioLibroElectronico {
+    - datos: byte[]
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoBinarioLibroAudio {
+    - datos: byte[]
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+class ArchivoBinarioLibroInfantil {
+    - datos: byte[]
+    + guardarLibros()
+    + cargarLibros(): List<?>
+}
+
+Archivo <|-- ArchivoTexto
+Archivo <|-- ArchivoBinario
+
+ArchivoTexto <|-- ArchivoTextoLibroFisico
+ArchivoTexto <|-- ArchivoTextoLibroElectronico
+ArchivoTexto <|-- ArchivoTextoLibroAudio
+ArchivoTexto <|-- ArchivoTextoLibroInfantil
+
+ArchivoBinario <|-- ArchivoBinarioLibroFisico
+ArchivoBinario <|-- ArchivoBinarioLibroElectronico
+ArchivoBinario <|-- ArchivoBinarioLibroAudio
+ArchivoBinario <|-- ArchivoBinarioLibroInfantil
+
+@enduml
