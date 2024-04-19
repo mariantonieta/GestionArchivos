@@ -8,7 +8,7 @@ public class ArchivoTextoLibroElectronico extends ArchivoTexto{
     }
 
     @Override
-    void cargar() {
-        super.cargar();
+    public List<Libro>  cargar() {
+      return   super.cargar();
     }
 }

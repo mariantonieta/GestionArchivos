@@ -15,6 +15,10 @@ public class Archivo {
         return ruta;
     }
 
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
     @Override
     public String toString() {
         return "Archivo{" +
