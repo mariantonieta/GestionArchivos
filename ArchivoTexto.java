@@ -1,13 +1,18 @@
 import java.io.*;
 import java.util.*;
+<<<<<<< HEAD
 
+=======
+import libros.*;
+>>>>>>> 87ef6d90429bf81181206bd6f8b20c6b20de01cc
 
 public class ArchivoTexto extends Archivo {
     List <String> registro = new ArrayList<>();
     void guardarLibros(List<Libro> libros) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("file.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(super.getRuta()))) {
             for (Libro libro : libros) {
                 // Determinar el tipo de libro y guardar en el archivo
+<<<<<<< HEAD
                 if (libro.getClass().getSimpleName().equals("LibroAudio")){
                     LibroAudio libroAudio = (LibroAudio) libro;
                     bw.write("Audio,");
@@ -98,10 +103,65 @@ public class ArchivoTexto extends Archivo {
 /*
                 bw.write(libro.toString());
                 bw.newLine(); // Nueva línea para el próximo libro
+=======
+                switch (libro.getClass().getSimpleName()) {
+                    case "LibroAudio" -> {
+                        LibroAudio libroAudio = (LibroAudio) libro;
+                        bw.write("Audio,");
+                        String datos = libro.getTitulo() + "," + libro.getAutor() + "," + libro.getGenero() + "," +
+                                libro.getPrecio() + "," + libroAudio.getDuracion() + "," + libroAudio.getIdioma()+ "," + libroAudio.getTasa();
+
+
+                        bw.write(datos);
+                        bw.newLine();
+
+                        registro.add(libroAudio.toString());
+
+
+                    }
+                    case "LibroInfantil" -> {
+                        LibroInfantil libroInfantil = (LibroInfantil) libro;
+                        bw.write("Infantil,");
+                        String datos = libro.getTitulo() + "," + libro.getAutor() + "," + libro.getGenero() + "," + libro.getPrecio() + "," +
+                                libroInfantil.getEdadRecomendada() + "," + libroInfantil.tieneIlustraciones() + "," + libroInfantil.getNumIlustraciones();
+
+                        bw.write(datos);
+                        bw.newLine(); // Nueva línea para el próximo libro
+
+                        registro.add("Infantil," + datos);
+
+                    }
+                    case "LibroElectronico" -> {
+                        bw.write("Electronico,");
+                        LibroElectronico libroElectronico = (LibroElectronico) libro;
+                        String datos = libro.getTitulo() + "," + libro.getAutor() + "," + libro.getGenero() + "," + libro.getPrecio() + "," +
+                                libroElectronico.getFormato();
+
+                        bw.write(datos);
+                        registro.add("Elecctronico," + datos);
+
+
+                    }
+                    case "LibroFisico" -> {
+                        LibroFisico libroFisico = (LibroFisico) libro;
+                        bw.write("Fisico,");
+                        String datos = libro.getTitulo() + "," + libro.getAutor() + "," + libro.getGenero() + "," +
+                                libro.getPrecio() + "," + libroFisico.getUbicacion();
+
+                        bw.write(datos);
+                        bw.newLine();
+
+
+                    }
+                    default ->
+                            System.out.println("tipo de libro no encontrado"); // Puedes agregar más tipos de libros según sea necesario
+                }
+>>>>>>> 87ef6d90429bf81181206bd6f8b20c6b20de01cc
 
  */
             }
         } catch (IOException e) {
+<<<<<<< HEAD
             e.printStackTrace();
         }
     }
@@ -109,12 +169,24 @@ public class ArchivoTexto extends Archivo {
         List<Libro> libros = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
+=======
+            System.out.println("archivo no encontrado IOException ");
+        }
+    }
+    public List<Libro> cargar() {
+        List<Libro> libros = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(super.getRuta()))) {
+>>>>>>> 87ef6d90429bf81181206bd6f8b20c6b20de01cc
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datosLibro = linea.split(",");
 
+<<<<<<< HEAD
                 for(String a : datosLibro) {System.out.println(a);}
 
+=======
+>>>>>>> 87ef6d90429bf81181206bd6f8b20c6b20de01cc
 
                 if (datosLibro.length >= 5) {
                     String tipoLibro = datosLibro[0].trim(); // Primer campo indica el tipo de libro
@@ -123,15 +195,24 @@ public class ArchivoTexto extends Archivo {
                     String genero = datosLibro[3].trim();
                     double precio = Double.parseDouble(datosLibro[4].trim());
 
+<<<<<<< HEAD
                     Libro libro = new Libro() {
                     };
+=======
+                    Libro libro;
+>>>>>>> 87ef6d90429bf81181206bd6f8b20c6b20de01cc
                     // Crear el tipo correcto de libro según el tipo registrado en el archivo
                     switch (tipoLibro) {
                         case "Audio":
                             int duracion = Integer.parseInt(datosLibro[5].trim());
+<<<<<<< HEAD
                             double duracionReal = Double.parseDouble(datosLibro[5].trim());
 
                             String idioma = datosLibro[6].trim();
+=======
+
+                            String idioma = datosLibro[6].trim(); // Obtener el idioma del libro de la posición correcta
+>>>>>>> 87ef6d90429bf81181206bd6f8b20c6b20de01cc
                             String tasa = datosLibro[7].trim();
                             libro = new LibroAudio(titulo, autor, genero, precio, duracion, idioma, tasa);
                             libros.add(libro);
@@ -160,6 +241,7 @@ public class ArchivoTexto extends Archivo {
                     }
 
                 } else {
+<<<<<<< HEAD
                     System.err.println("La línea no tiene suficientes datos para crear un libro: " + linea);
                 }
             }
@@ -167,6 +249,15 @@ public class ArchivoTexto extends Archivo {
             e.printStackTrace();
         } catch (NumberFormatException e) {
             System.err.println("Error al convertir datos numéricos: " + e.getMessage());
+=======
+                    System.out.println("La línea no tiene suficientes datos para crear un libro: " + linea);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("archivo no encontrado IOException ");
+        } catch (NumberFormatException e) {
+            System.out.println("Error al convertir datos numéricos: " + e.getMessage());
+>>>>>>> 87ef6d90429bf81181206bd6f8b20c6b20de01cc
         }
 
         return libros;
