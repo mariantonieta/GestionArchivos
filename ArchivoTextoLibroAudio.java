@@ -9,8 +9,8 @@ public class ArchivoTextoLibroAudio extends ArchivoTexto{
     }
 
     @Override
-    void cargar() {
-        super.cargar();
+    public List<Libro>  cargar() {
+     return super.cargar();
     }
 }
 
