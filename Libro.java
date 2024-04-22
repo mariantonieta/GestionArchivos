@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+package GestionArchivos;
+
+=======
+>>>>>>> 2dc568a7123b325081f7176eb35206d8411f33a8
 import java.io.Serializable;
 import java.util.List;
 
