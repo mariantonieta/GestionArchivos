@@ -1,3 +1,5 @@
+package GestionArchivos;
+
 import java.io.*;
 import java.util.*;
 public class Archivo {
@@ -8,12 +10,18 @@ public class Archivo {
     public String getNombre() {
         return nombre;
     }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
     public String getExtension() {
         return extension;
     }
     public String getRuta() {
         return ruta;
     }
+
 
     @Override
     public String toString() {
