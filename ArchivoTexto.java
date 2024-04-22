@@ -1,17 +1,5 @@
-<<<<<<< HEAD
 import java.io.*;
 import java.util.*;
-=======
-<<<<<<< HEAD
-package GestionArchivos;
-
-=======
-import java.io.*;
->>>>>>> 2dc568a7123b325081f7176eb35206d8411f33a8
-import java.util.*;
-import libros.*;
->>>>>>> 4c15fa22140e19ae556e554cf46facbb31a31158
-//commit2
 public class ArchivoTexto extends Archivo {
     List <String> registro = new ArrayList<>();
     void guardarLibros(List<Libro> libros) {

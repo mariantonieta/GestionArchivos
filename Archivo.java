@@ -1,4 +1,3 @@
-package GestionArchivos;
 
 import java.io.*;
 import java.util.*;
@@ -22,12 +21,7 @@ public class Archivo {
         return ruta;
     }
 
-<<<<<<< HEAD
-=======
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
-    }
->>>>>>> 2dc568a7123b325081f7176eb35206d8411f33a8
+
 
     @Override
     public String toString() {
