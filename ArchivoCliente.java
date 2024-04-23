@@ -1,14 +1,10 @@
 
-package GestionArchivos;
-
-import Clientes.proyecto_Daw_Yarel.Cliente;
-import Clientes.proyecto_Daw_Yarel.*;
-
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 
-public class ArchivoCliente extends Archivo{
+public class ArchivoCliente extends Archivo {
 
     List <String> registro = new ArrayList<>();
     void guardarClientes(List<Cliente> clientes) {
@@ -18,7 +14,7 @@ public class ArchivoCliente extends Archivo{
 
                     case "ClienteInternacional" -> {
                         ClienteInternacional clienteInternacional = (ClienteInternacional) cliente;
-                        bw.write("CLientesInternacional");
+                        bw.write("ClientesInternacional,");
                         String DatosClienteInternacinal =  cliente.getNombre()+ "," + cliente.getDireccion() + ","
                                 +  cliente.getEmail() + "," + cliente.getFechaRegistro() + ","
                                 + cliente.getNumTelefono();
@@ -30,7 +26,7 @@ public class ArchivoCliente extends Archivo{
                     }
                     case "ClienteMayorista" -> {
                         ClienteMayorista clienteMayorista = (ClienteMayorista) cliente;
-                        bw.write("ClientesMayorista");
+                        bw.write("ClientesMayorista,");
                         String DatosClienteMayorista = cliente.getNombre() + "," +  cliente.getDireccion()
                                 + "," + cliente.getEmail() + "," + cliente.getFechaRegistro() + ","
                                 + cliente.getNumTelefono();
@@ -41,7 +37,7 @@ public class ArchivoCliente extends Archivo{
                     }
                     case "ClienteOnline" -> {
                         ClienteOnline clienteOnline = (ClienteOnline) cliente;
-                        bw.write("ClienteOnline");
+                        bw.write("ClienteOnline,");
                         String DatosClientesOnline =  cliente.getNombre() + "," + cliente.getDireccion()
                                 + "," + cliente.getEmail() + ","  + cliente.getFechaRegistro()
                                 +  "," + cliente.getNumTelefono();
@@ -52,7 +48,7 @@ public class ArchivoCliente extends Archivo{
                     }
                     case "ClienteRegular" -> {
                         ClienteRegular clienteRegular = (ClienteRegular) cliente;
-                        bw.write("ClienteRegular");
+                        bw.write("ClienteRegular,");
                         String DatosClientesRegular = cliente.getNombre() + "," + cliente.getDireccion()
                                 + "," + cliente.getEmail() + "," + cliente.getFechaRegistro()
                                 +  "," + cliente.getNumTelefono();
@@ -62,9 +58,9 @@ public class ArchivoCliente extends Archivo{
                         registro.add(clienteRegular.toString());
 
                     }
-                    case "ClienteVip" -> {
+                    case "ClienteVIP" -> {
                         ClienteVIP ClienteVip = (ClienteVIP) cliente;
-                        bw.write("ClienteVip");
+                        bw.write("ClientesVip,");
                         String DatosClienteVip =  cliente.getNombre() + "," + cliente.getDireccion()
                                 + "," + cliente.getEmail() + "," + cliente.getFechaRegistro()
                                 +  "," + cliente.getNumTelefono();
@@ -80,4 +76,56 @@ public class ArchivoCliente extends Archivo{
         }
     }
 
+    public List<Cliente> cargar() {
+        List<Cliente> clientes = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(super.getRuta()))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datosCliente = linea.split(",");
+
+                if (datosCliente.length >= 5) {
+                    String tipoCliente = datosCliente[0].trim();
+                    System.out.println(tipoCliente);
+                    String nombre = datosCliente[1].trim();
+                    String direccion = datosCliente[2].trim();
+                    String email = datosCliente[3].trim();
+
+                    Cliente cliente;
+
+                    switch (tipoCliente) {
+                        case "ClientesInternacional":
+
+                            cliente = new ClienteInternacional(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            // Realizar acciones específicas para clientes internacionales
+                            ((ClienteInternacional) cliente).calcularCostoEnvioInternacional();
+                            ((ClienteInternacional) cliente).gestionarAduanas();
+                            break;
+                        case "ClientesMayorista":
+                            cliente = new ClienteMayorista(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            // Realizar acciones específicas para clientes mayoristas
+
+                            break;
+                        case "ClientesOnline":
+                            cliente = new ClienteOnline(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            break;
+                        case "ClientesRegular":
+                            cliente = new ClienteRegular(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            break;
+                        case "ClientesVIP":
+                            cliente = new ClienteVIP(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            break;
+                        default:
+                            System.out.println("Tipo de cliente no reconocido: " + tipoCliente);
+                            continue;
+                    }
+
+                } else {
+                    System.out.println("La línea no tiene suficientes datos para crear un cliente: " + clientes);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("archivo no encontrado IOException ");}
+
+        return clientes;
+    }
 }
