@@ -1,4 +1,5 @@
-package GestionArchivos;
+
+import Proyecto_Libreria.Libro;
 
 import java.util.List;
 
