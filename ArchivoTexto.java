@@ -1,3 +1,5 @@
+import Proyecto_Libreria.*;
+
 import java.io.*;
 import java.util.*;
 public class ArchivoTexto extends Archivo {
