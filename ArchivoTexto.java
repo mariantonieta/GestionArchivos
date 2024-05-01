@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 public class ArchivoTexto extends Archivo {
     List <String> registro = new ArrayList<>();
-    void guardarLibros(List<Libro> libros) {
+    void guardarLibros(List<Proyecto_Libreria.Libro> libros) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(super.getRuta()))) {
             for (Libro libro : libros) {
                 // Determinar el tipo de libro y guardar en el archivo

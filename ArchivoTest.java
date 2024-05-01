@@ -1,18 +1,9 @@
 import Proyecto_Libreria.*;
 import org.junit.jupiter.api.Test;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("Archivo Test")
 
 class ArchivoTest {
@@ -24,7 +15,7 @@ class ArchivoTest {
             ArchivoTexto archivo = new ArchivoTexto();
         archivo.setRuta(System.getProperty("user.dir") + File.separator + "file.txt");
 
-            List<Libro> librosCargados = archivo.cargar();
+            java.util.List<Proyecto_Libreria.Libro> librosCargados = archivo.cargar();
         LibroAudio libroAudio = new LibroAudio("Canción de Hielo y Fuego", "George R. R. Martin", "Fantasía", 25.99, 600, "Español", "55");
         LibroInfantil libroInfantil = new LibroInfantil("El Principito", "Antoine de Saint-Exupéry", "Infantil", 10.50, 6, true, 20);
         LibroElectronico libroElectronico = new LibroElectronico("Clean Code", "Robert C. Martin", "Programación", 35.99, "PDF");
