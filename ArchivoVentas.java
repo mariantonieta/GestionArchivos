@@ -1,3 +1,6 @@
+import Ventas.*;
+import clientes.*;
+import libros.*;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -5,39 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArchivoVentas extends Archivo {
+public class ArchivoVentas extends Archivo{
     ArrayList<Venta> ventas = new ArrayList<>();
 
-    public void guardar(List<Venta> ventasGuardar) {
+    public void guardar(List<Venta> ventasGuardar){
         File file = new File(super.getRuta());
-        try {
+        try{
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
 
 
-            for (Venta v : ventasGuardar) {
+            for (Venta  v: ventasGuardar) {
                 String datos = "";
 
-                switch (v.getClass().getSimpleName()) {
-                    case "Venta" -> {
+                switch (v.getClass().getSimpleName()){
+                    case "Venta"->{
                         datos += "Venta,";
                         datos += v.getDescuento() + "," + v.getIdVenta() + "," + v.getPrecio()
-                                + "," + v.getFechaVenta().getYear() + "," + v.getFechaVenta().getMonthValue() + "," + v.getFechaVenta().getDayOfMonth() +
-                                "," + v.getFechaEntrega().getYear() + "," + v.getFechaEntrega().getMonthValue() + "," + v.getFechaVenta().getDayOfMonth();
+                                + "," + v.getFechaVenta().getYear() + "," + v.getFechaVenta().getMonthValue()+ "," + v.getFechaVenta().getDayOfMonth()+
+                                "," + v.getFechaEntrega().getYear() + "," + v.getFechaEntrega().getMonthValue() +","+ v.getFechaVenta().getDayOfMonth();
                         bw.write(datos);
                     }
-                    case "VentaMayorista" -> {
+                    case "VentaMayorista" ->{
                         datos += "VentaMayorista,";
                         datos += v.getDescuento() + "," + v.getIdVenta() + "," + v.getPrecio()
-                                + "," + v.getFechaVenta().getYear() + "," + v.getFechaVenta().getMonthValue() + "," + v.getFechaVenta().getDayOfMonth() +
-                                "," + v.getFechaEntrega().getYear() + "," + v.getFechaEntrega().getMonthValue() + "," + v.getFechaVenta().getDayOfMonth();
+                                + "," + v.getFechaVenta().getYear() + "," + v.getFechaVenta().getMonthValue()+ "," + v.getFechaVenta().getDayOfMonth()+
+                                "," + v.getFechaEntrega().getYear() + "," + v.getFechaEntrega().getMonthValue() +","+ v.getFechaVenta().getDayOfMonth();
                         bw.write(datos);
                     }
-                    case "VentaOnline" -> {
-                        datos += "VentaOnline,";
+                    case "VentaOnline" ->{
+                        datos +="VentaOnline,";
                         datos += v.getDescuento() + "," + v.getIdVenta() + "," + v.getPrecio()
-                                + "," + v.getFechaVenta().getYear() + "," + v.getFechaVenta().getMonthValue() + "," + v.getFechaVenta().getDayOfMonth() +
-                                "," + v.getFechaEntrega().getYear() + "," + v.getFechaEntrega().getMonthValue() + "," + v.getFechaVenta().getDayOfMonth();
+                                + "," + v.getFechaVenta().getYear() + "," + v.getFechaVenta().getMonthValue() + "," + v.getFechaVenta().getDayOfMonth()+
+                                "," + v.getFechaEntrega().getYear() + "," + v.getFechaEntrega().getMonthValue() +","+ v.getFechaVenta().getDayOfMonth();
                         bw.write(datos);
                     }
                     case "VentaPresencial" -> {
@@ -51,38 +54,30 @@ public class ArchivoVentas extends Archivo {
                         bw.write(vendedorToString(vendedor));
                     }
                 }
-                List<Cliente> clientes = (List<Cliente>) v.getClientes();
-
-               /* if (clientes.size() > 0) {
-                    escribirCliente(bw, clientes.get(0));
-                } else {
-                    System.out.println("Venta sin cliente");
-                }*/
 
                 bw.newLine();
-                escribirCliente(bw, v.getClientes());
+                escribirCliente(bw, v.getCliente());
                 escribirLibros(bw, v.getLibrosVendidos());
                 bw.newLine();
                 bw.write("fin");
 
-            }
+             }
             bw.close();
             fw.close();
 
-        } catch (IOException e) {
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
-
-    public ArrayList<Venta> cargar() {
+    public ArrayList<Venta> cargar(){
         Scanner sc = new Scanner(System.in);
         File file = new File(super.getRuta());
         ArrayList<Venta> ventas1 = new ArrayList<>();
-        try {
+        try{
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
-            while (true) {
+            while (2+2 != 5){
                 String atributo = br.readLine();
                 if (atributo == null) break;
                 String[] atributos = atributo.split(",");
@@ -94,10 +89,12 @@ public class ArchivoVentas extends Archivo {
                 double Precio = (Double.parseDouble(atributos[3]));
                 LocalDate fechaDeVenta = LocalDate.of(Integer.parseInt(atributos[4]), Integer.parseInt(atributos[5]), Integer.parseInt(atributos[6]));
 
-                if (atributos[0].equals("VentaPresencial")) {
+                if (atributos[0].equals("VentaPresencial")){
                     String[] vendedorAtrib = br.readLine().split(",");
-                    vendedor = new Vendedor(vendedorAtrib[0], vendedorAtrib[1], vendedorAtrib[2], vendedorAtrib[3], vendedorAtrib[4]);
+                    vendedor = new Vendedor(vendedorAtrib[0], vendedorAtrib[1], vendedorAtrib[2], vendedorAtrib[3],vendedorAtrib[4]);
                 }
+
+
 
 
                 Cliente cliente = leerCliente(br);
@@ -105,28 +102,32 @@ public class ArchivoVentas extends Archivo {
 
 
                 String libross = br.readLine();
-                do {
+                do{
 
                     librosVendidos.add(leerLibro(libross));
                     libross = br.readLine();
-                } while (!libross.equals("fin"));
+                }while (!libross.equals("fin"));
                 //venta.setLibroVendidos(librosVendidos);
 
 
-                switch (atributos[0]) {
-                    case "Venta" -> {
-                        venta = new Venta(sc, fechaDeVenta, librosVendidos, (List<Cliente>) cliente);
+
+
+
+
+                switch (atributos[0]){
+                    case "Venta" ->{
+                        venta = new Venta(sc,fechaDeVenta, librosVendidos,cliente);
                         venta.setFechaEntrega(LocalDate.of(Integer.parseInt(atributos[7]), Integer.parseInt(atributos[8]), Integer.parseInt(atributos[9])));
                     }
-                    case "VentaMayorista" -> {
-                        venta = new VentaMayorista(sc, fechaDeVenta, librosVendidos, (List<Cliente>) cliente);
+                    case "VentaMayorista" ->{
+                        venta = new VentaMayorista(sc, fechaDeVenta,librosVendidos, cliente);
                         venta.setFechaEntrega(LocalDate.of(Integer.parseInt(atributos[7]), Integer.parseInt(atributos[8]), Integer.parseInt(atributos[9])));
                     }
-                    case "VentaOnline" -> {
-                        venta = new VentaOnline(sc, fechaDeVenta, librosVendidos, (List<Cliente>) cliente);
+                    case "VentaOnline" ->{
+                        venta = new VentaOnline(sc,fechaDeVenta,librosVendidos, cliente);
                         venta.setFechaEntrega(LocalDate.of(Integer.parseInt(atributos[7]), Integer.parseInt(atributos[8]), Integer.parseInt(atributos[9])));
                     }
-                    case "VentaPresencial" -> venta = new VentaPresencial(sc, fechaDeVenta, librosVendidos, (List<Cliente>) cliente, vendedor);
+                    case"VentaPresencial" -> venta = new VentaPresencial(sc, fechaDeVenta, librosVendidos,cliente, vendedor);
                 }
 
                 venta.setDescuento(Descuento);
@@ -134,83 +135,49 @@ public class ArchivoVentas extends Archivo {
                 venta.setPrecio(Precio);
 
 
-                ventas1.add(venta);
+
+
+
+
+            ventas1.add(venta);
             }
 
 
+
+
+
+
+
             ventas = ventas1;
-        } catch (IOException e) {
+        }catch (IOException e){
             System.out.println("hubo un error IOException");
         }
         return ventas1;
     }
 
 
-    public static void main(String[] args) {
-        Cliente cliente1 = new Cliente("aaa","bbb","ccc",LocalDate.now(),2222222);
-        Cliente cliente2 = new Cliente("lll","www","sss",LocalDate.now(),3333333);
-        LibroAudio uno = new LibroAudio();
-        uno.setDuracion(20);
-        uno.setAutor("Juan");
-        uno.setGenero("tanque T800");
-        uno.setTitulo("Libro de Juan");
-        uno.setDuracion(400);
-        uno.setIdioma("es");
-        uno.setPrecio(20);
 
 
-        LibroElectronico libroE = new LibroElectronico();
-        libroE.setAutor("Pepe");
-        libroE.setGenero("helicóptero Apache");
-        libroE.setTitulo("libro de pepe");
-        libroE.setPrecio(34);
-        libroE.setFormato("PDF");
 
-
-        Vendedor vendedor = new Vendedor("moja", "xf", "calle principal", "1231312", "asdad@asdad");
-
-        ArrayList<Libro> libros = new ArrayList<>();
-        libros.add(uno);
-        libros.add(libroE);
-        Scanner sc = new Scanner(System.in);
-
-        List<Cliente> cliente = null;
-        VentaPresencial ventaPresencial = new VentaPresencial(sc, LocalDate.now(), libros, cliente, vendedor);
-        ventaPresencial.setIdVenta(1);
-        ventaPresencial.setDescuento(0);
-        ventaPresencial.setPrecio(34);
-
-        ArrayList<Venta> ventas1 = new ArrayList<>();
-
-        ventas1.add(ventaPresencial);
-        ArchivoVentas av = new ArchivoVentas();
-        av.setRuta(System.getProperty("user.dir") + "\\src\\ventas.txt");
-        av.guardar(ventas1);
-
-        List<Venta> ventas = av.cargar();
-
-    }
-
-
-    private void escribirCliente(BufferedWriter bw, Cliente cliente) {
-        try {
+    private void escribirCliente(BufferedWriter bw, Cliente cliente){
+        try{
             switch (cliente.getClass().getSimpleName()) {
 
-               /* case "ClienteInternacional" -> {
+                case "ClienteInternacional" -> {
                     ClienteInternacional clienteInternacional = (ClienteInternacional) cliente;
                     bw.write("ClientesInternacional,");
-                    String DatosClienteInternacinal = cliente.getNombre() + "," + cliente.getDireccion() + ","
-                            + cliente.getEmail() + "," + cliente.getFechaRegistro() + ","
+                    String DatosClienteInternacinal =  cliente.getNombre()+ "," + cliente.getDireccion() + ","
+                            +  cliente.getEmail() + "," + cliente.getFechaRegistro() + ","
                             + cliente.getNumTelefono();
 
                     bw.write(DatosClienteInternacinal);
                     bw.newLine();
 
-                }*/
+                }
                 case "ClienteMayorista" -> {
                     ClienteMayorista clienteMayorista = (ClienteMayorista) cliente;
                     bw.write("ClientesMayorista,");
-                    String DatosClienteMayorista = cliente.getNombre() + "," + cliente.getDireccion()
+                    String DatosClienteMayorista = cliente.getNombre() + "," +  cliente.getDireccion()
                             + "," + cliente.getEmail() + "," + cliente.getFechaRegistro() + ","
                             + cliente.getNumTelefono();
                     bw.write(DatosClienteMayorista);
@@ -219,9 +186,9 @@ public class ArchivoVentas extends Archivo {
                 case "ClienteOnline" -> {
                     ClienteOnline clienteOnline = (ClienteOnline) cliente;
                     bw.write("ClienteOnline,");
-                    String DatosClientesOnline = cliente.getNombre() + "," + cliente.getDireccion()
-                            + "," + cliente.getEmail() + "," + cliente.getFechaRegistro()
-                            + "," + cliente.getNumTelefono();
+                    String DatosClientesOnline =  cliente.getNombre() + "," + cliente.getDireccion()
+                            + "," + cliente.getEmail() + ","  + cliente.getFechaRegistro()
+                            +  "," + cliente.getNumTelefono();
                     bw.write(DatosClientesOnline);
                     bw.newLine();
 
@@ -231,7 +198,7 @@ public class ArchivoVentas extends Archivo {
                     bw.write("ClienteRegular,");
                     String DatosClientesRegular = cliente.getNombre() + "," + cliente.getDireccion()
                             + "," + cliente.getEmail() + "," + cliente.getFechaRegistro()
-                            + "," + cliente.getNumTelefono();
+                            +  "," + cliente.getNumTelefono();
                     bw.write(DatosClientesRegular);
                     bw.newLine();
 
@@ -240,28 +207,28 @@ public class ArchivoVentas extends Archivo {
                 case "ClienteVIP" -> {
                     ClienteVIP ClienteVip = (ClienteVIP) cliente;
                     bw.write("ClientesVip,");
-                    String DatosClienteVip = cliente.getNombre() + "," + cliente.getDireccion()
+                    String DatosClienteVip =  cliente.getNombre() + "," + cliente.getDireccion()
                             + "," + cliente.getEmail() + "," + cliente.getFechaRegistro()
-                            + "," + cliente.getNumTelefono();
+                            +  "," + cliente.getNumTelefono();
                     bw.write(DatosClienteVip);
                     bw.newLine();
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        }catch (Exception e){
+        System.out.println(e);
+    }
     }
 
-    private void escribirLibros(BufferedWriter bw, List<Libro> libros) {
-        try {
+    private void escribirLibros(BufferedWriter bw, List<Libro> libros){
+        try{
             for (Libro libro : libros) {
-                // determinar el tipo de libro y guardar en el archivo
+                // Determinar el tipo de libro y guardar en el archivo
                 switch (libro.getClass().getSimpleName()) {
                     case "LibroAudio" -> {
                         LibroAudio libroAudio = (LibroAudio) libro;
                         bw.write("Audio,");
                         String datos = libro.getTitulo() + "," + libro.getAutor() + "," + libro.getGenero() + "," +
-                                libro.getPrecio() + "," + libroAudio.getDuracion() + "," + libroAudio.getIdioma() + "," + libroAudio.getTasa();
+                                libro.getPrecio() + "," + libroAudio.getDuracion() + "," + libroAudio.getIdioma()+ "," + libroAudio.getTasa();
 
 
                         bw.write(datos);
@@ -276,7 +243,7 @@ public class ArchivoVentas extends Archivo {
                                 libroInfantil.getEdadRecomendada() + "," + libroInfantil.tieneIlustraciones() + "," + libroInfantil.getNumIlustraciones();
 
                         bw.write(datos);
-                        bw.newLine();
+                        bw.newLine(); // Nueva línea para el próximo libro
 
                     }
                     case "LibroElectronico" -> {
@@ -299,7 +266,7 @@ public class ArchivoVentas extends Archivo {
 
                     }
                     default ->
-                            System.out.println("tipo de libro no encontrado");
+                            System.out.println("tipo de libro no encontrado"); // Puedes agregar más tipos de libros según sea necesario
                 }
 
             }
@@ -308,110 +275,62 @@ public class ArchivoVentas extends Archivo {
         }
     }
 
-    private String vendedorToString(Vendedor vendedor) {
-        return vendedor.getNombre() + "," + vendedor.getApellido() + "," +
-                vendedor.getDireccion() + "," + vendedor.getTelefono() + "," +
+    private String vendedorToString(Vendedor vendedor){
+        return vendedor.getNombre() + ","+ vendedor.getApellido()+ ","+
+                vendedor.getDireccion() + "," + vendedor.getTelefono() + ","+
                 vendedor.getEmail();
     }
-    private Cliente leerCliente(BufferedReader br) {
+
+    private Cliente leerCliente(BufferedReader br){
         Cliente cliente = null;
-        try {
+        try{
             String linea;
 
             linea = br.readLine();
             String[] datosCliente = linea.split(",");
 
-            if (datosCliente.length >= 5) {
-                String tipoCliente = datosCliente[0].trim();
-                String nombre = datosCliente[1].trim();
-                String direccion = datosCliente[2].trim();
-                String email = datosCliente[3].trim();
+                if (datosCliente.length >= 5) {
+                    String tipoCliente = datosCliente[0].trim();
+                    String nombre = datosCliente[1].trim();
+                    String direccion = datosCliente[2].trim();
+                    String email = datosCliente[3].trim();
 
 
-                switch (tipoCliente) {
-                /* case "ClientesInternacional":
 
-                     cliente = new ClienteInternacional(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                    switch (tipoCliente) {
+                        case "ClientesInternacional":
 
-                     break;*/
-                    case "ClientesMayorista":
-                        cliente = new ClienteMayorista(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            cliente = new ClienteInternacional(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            // Realizar acciones específicas para clientes internacionales
+                            break;
+                        case "ClientesMayorista":
+                            cliente = new ClienteMayorista(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            // Realizar acciones específicas para clientes mayoristas
 
+                            break;
+                        case "ClientesOnline":
+                            cliente = new ClienteOnline(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            break;
+                        case "ClientesRegular":
+                            cliente = new ClienteRegular(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            break;
+                        case "ClientesVIP":
+                            cliente = new ClienteVIP(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
+                            break;
+                        default:
+                            System.out.println("Tipo de cliente no reconocido: " + tipoCliente);
+                    }
 
-                        break;
-                    case "ClientesOnline":
-                        cliente = new ClienteOnline(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                        break;
-                    case "ClientesRegular":
-                        cliente = new ClienteRegular(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                        break;
-                    case "ClientesVIP":
-                        cliente = new ClienteVIP(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                        break;
-                    default:
-                        System.out.println("Tipo de cliente no reconocido: " + tipoCliente);
+                } else {
+                    System.out.println("La línea no tiene suficientes datos para crear un cliente: " + cliente);
                 }
-
-            } else {
-                System.out.println("La línea no tiene suficientes datos para crear un cliente: " + linea);
-            }
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo: " + e.getMessage());
-        }
+            }catch (IOException e) {
+            System.out.println("archivo no encontrado IOException ");}
 
         return cliente;
     }
 
-    /*private Cliente leerCliente(BufferedReader br) {
-        List<Cliente> cliente = null;
-        try {
-            String linea;
-
-            linea = br.readLine();
-            String[] datosCliente = linea.split(",");
-
-            if (datosCliente.length >= 5) {
-                String tipoCliente = datosCliente[0].trim();
-                String nombre = datosCliente[1].trim();
-                String direccion = datosCliente[2].trim();
-                String email = datosCliente[3].trim();
-
-
-                switch (tipoCliente) {
-                    case "ClientesInternacional":
-
-                        cliente = new ClienteInternacional(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-
-                        break;
-                    case "ClientesMayorista":
-                        cliente = new ClienteMayorista(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-
-
-                        break;
-                    case "ClientesOnline":
-                        cliente = new ClienteOnline(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                        break;
-                    case "ClientesRegular":
-                        cliente = new ClienteRegular(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                        break;
-                    case "ClientesVIP":
-                        cliente = new ClienteVIP(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                        break;
-                    default:
-                        System.out.println("Tipo de cliente no reconocido: " + tipoCliente);
-                }
-
-            } else {
-                System.out.println("La línea no tiene suficientes datos para crear un cliente: " + cliente);
-            }
-        } catch (IOException e) {
-            System.out.println("archivo no encontrado IOException ");
-        }
-        return cliente;
-    }*/
-
-
-    /*private Libro leerLibro(String infoLibro) { ////////////////CORREGIR AQUÍ CUANDO REGRESE
+    private Libro leerLibro(String infoLibro){ ////////////////CORREGIR AQUÍ CUANDO REGRESE
         Libro libro = null;
         String[] datosLibro = infoLibro.split(",");
         if (datosLibro.length >= 5) {
@@ -430,85 +349,32 @@ public class ArchivoVentas extends Archivo {
                     libro = new LibroAudio(titulo, autor, genero, precio, duracion, idioma, tasa);
 
                     break;
-                case "Infantil":
-                    int edadRecomendada = Integer.parseInt(datosLibro[5].trim()); // Obtener la edad recomendada
-                    boolean ilustraciones = Boolean.parseBoolean(datosLibro[6].trim()); // Obtener si tiene ilustraciones
-                    int numIlustraciones = Integer.parseInt(datosLibro[7].trim()); // Obtener el número de ilustraciones
-                    libro = new LibroInfantil(titulo, autor, genero, precio, edadRecomendada, ilustraciones, numIlustraciones);
-                    break;
-                case "Electronico":
-                    String formato = datosLibro[5].trim(); // Obtener el formato del libro electrónico
-                    libro = new LibroElectronico(titulo, autor, genero, precio, formato);
-
-                    break;
-                case "Fisico":
-                    String ubicacion = datosLibro[5].trim(); // Obtener la ubicación física del libro
-                    libro = new LibroFisico(titulo, autor, genero, precio, ubicacion);
-
-                    break;
-                default:
-                    // Manejo de otros tipos de libros
-                    System.out.println("tipo de libro no encontrado");
-                    break;
-            }
-
-        } else {
-            System.out.println("La línea no tiene suficientes datos para crear un libro: " + infoLibro);
-        }
-        return libro;
-    }*/
-    private Libro leerLibro(String infoLibro) {
-        Libro libro = null;
-        String[] datosLibro = infoLibro.split(",");
-
-        if (datosLibro.length >= 6) {
-            String tipoLibro = datosLibro[0].trim();
-            String titulo = datosLibro[1].trim();
-            String autor = datosLibro[2].trim();
-            String genero = datosLibro[3].trim();
-
-            try {
-                double precio = Double.parseDouble(datosLibro[4].trim());
-
-                switch (tipoLibro) {
-                    case "Audio":
-                        int duracion = Integer.parseInt(datosLibro[5].trim());
-                        String idioma = datosLibro[5].trim();
-                        String tasa = datosLibro[6].trim();
-                        libro = new LibroAudio(titulo, autor, genero, precio, duracion, idioma, tasa);
-
-                        break;
                     case "Infantil":
-                        int edadRecomendada = Integer.parseInt(datosLibro[5].trim());
-                        boolean ilustraciones = Boolean.parseBoolean(datosLibro[6].trim());
-                        int numIlustraciones = Integer.parseInt(datosLibro[7].trim());
+                        int edadRecomendada = Integer.parseInt(datosLibro[5].trim()); // Obtener la edad recomendada
+                        boolean ilustraciones = Boolean.parseBoolean(datosLibro[6].trim()); // Obtener si tiene ilustraciones
+                        int numIlustraciones = Integer.parseInt(datosLibro[7].trim()); // Obtener el número de ilustraciones
                         libro = new LibroInfantil(titulo, autor, genero, precio, edadRecomendada, ilustraciones, numIlustraciones);
+                        break;
+                        case "Electronico":
+                            String formato = datosLibro[5].trim(); // Obtener el formato del libro electrónico
+                            libro = new LibroElectronico(titulo, autor, genero, precio, formato);
 
-                        break;
-                    case "Electronico":
-                        String formato = datosLibro[5].trim();
-                        libro = new LibroElectronico(titulo, autor, genero, precio, formato);
+                            break;
+                        case "Fisico":
+                            String ubicacion = datosLibro[5].trim(); // Obtener la ubicación física del libro
+                            libro = new LibroFisico(titulo, autor, genero, precio, ubicacion);
 
-                        break;
-                    case "Fisico":
-                        String ubicacion = datosLibro[5].trim();
-                        libro = new LibroFisico(titulo, autor, genero, precio, ubicacion);
+                            break;
+                        default:
+                            // Manejo de otros tipos de libros
+                            System.out.println("tipo de libro no encontrado");
+                            break;
+                    }
 
-                        break;
-                    default:
-                        System.out.println("Tipo de libro no encontrado: " + tipoLibro);
-                        break;
+                } else {
+                    System.out.println("La línea no tiene suficientes datos para crear un libro: " + infoLibro);
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Error al convertir el precio a double: " + datosLibro[4]);
-            }
-
-        } else {
-            System.out.println("La línea no tiene suficientes datos para crear un libro: " + infoLibro);
-        }
-
         return libro;
     }
-
 
 }
