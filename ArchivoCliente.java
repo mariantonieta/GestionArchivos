@@ -1,8 +1,7 @@
-
+import Clientes.proyecto_Daw_Yarel.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
-
 
 public class ArchivoCliente extends Archivo {
 
@@ -80,6 +79,7 @@ public class ArchivoCliente extends Archivo {
         List<Cliente> clientes = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(super.getRuta()))) {
             String linea;
+            
             while ((linea = br.readLine()) != null) {
                 String[] datosCliente = linea.split(",");
 
@@ -94,23 +94,21 @@ public class ArchivoCliente extends Archivo {
 
                     switch (tipoCliente) {
                         case "ClientesInternacional":
-
                             cliente = new ClienteInternacional(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                            // Realizar acciones específicas para clientes internacionales
-                            ((ClienteInternacional) cliente).calcularCostoEnvioInternacional();
-                            ((ClienteInternacional) cliente).gestionarAduanas();
                             break;
+
                         case "ClientesMayorista":
                             cliente = new ClienteMayorista(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
-                            // Realizar acciones específicas para clientes mayoristas
-
                             break;
+
                         case "ClientesOnline":
                             cliente = new ClienteOnline(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
                             break;
+
                         case "ClientesRegular":
                             cliente = new ClienteRegular(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
                             break;
+
                         case "ClientesVIP":
                             cliente = new ClienteVIP(nombre, direccion, email, LocalDate.parse(datosCliente[4].trim()), Integer.parseInt(datosCliente[5].trim()));
                             break;
@@ -118,6 +116,7 @@ public class ArchivoCliente extends Archivo {
                             System.out.println("Tipo de cliente no reconocido: " + tipoCliente);
                             continue;
                     }
+                    clientes.add(cliente);
 
                 } else {
                     System.out.println("La línea no tiene suficientes datos para crear un cliente: " + clientes);
