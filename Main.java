@@ -1,3 +1,7 @@
+package GestionArchivos;
+
+import Proyecto_Libreria.*;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,3 +1,5 @@
+package GestionArchivos;
+
 import Proyecto_Libreria.LibroAudio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +30,7 @@ public class ArchivoBinarioLibroAudioTest {
         librosList.add(new LibroAudio(55, "Gabriel García Márquez", "si"));
         librosList.add(new LibroAudio(5, "Antoine de Saint-Exupéry", "si"));
 
-        archivoBinarioLibroAudio.guardarLibros(librosList);
+        archivoBinarioLibroAudio.GuardarLibros(librosList);
 
         List<Byte> datosRecuperados = archivoBinarioLibroAudio.cargarLibros();
 

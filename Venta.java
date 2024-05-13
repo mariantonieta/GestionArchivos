@@ -1,3 +1,7 @@
+package GestionArchivos;
+
+import Proyecto_Libreria.Libro;
+import proyecto_Daw_Yarel.Cliente;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -270,5 +274,3 @@ public class Venta {
         }
     }
 
-
-}

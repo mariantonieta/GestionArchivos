@@ -1,4 +1,6 @@
-import libros.LibroFisico;
+package GestionArchivos;
+
+import Proyecto_Libreria.LibroFisico;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,4 +1,5 @@
-import libros.LibroInfantil;
+package GestionArchivos;
+import Proyecto_Libreria.LibroInfantil;
 
 import java.io.File;
 import java.io.FileInputStream;

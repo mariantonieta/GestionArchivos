@@ -1,5 +1,5 @@
-import libros.LibroElectronico;
-
+package GestionArchivos;
+import Proyecto_Libreria.LibroElectronico;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
